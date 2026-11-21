@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Selamat Ulang Tahun!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#2a1b3d; --bg2:#3b2757; --cream:#ffe8d6; --pink:#ff8fa3;
+    --flame:#ffb627; --mint:#7ae7c7; --text:#fff6ee;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0}
+  body{
+    background:radial-gradient(circle at 50% 30%,var(--bg2),var(--bg) 70%);
+    color:var(--text); font-family:'Fredoka',system-ui,sans-serif;
+    text-align:center; overflow-x:hidden;
+  }
+  main{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 20px 40px}
+  h1{font-weight:600;font-size:clamp(1.9rem,8vw,3.2rem);margin:0 0 4px;line-height:1.15}
+  .nama{font-family:'Caveat',cursive;font-size:clamp(2.6rem,13vw,5rem);color:var(--flame);margin:0 0 8px;line-height:1}
+  .hint{opacity:.8;margin:0 0 8px;min-height:1.5em}
+  #cake{width:min(320px,78vw);height:auto;cursor:pointer;-webkit-tap-highlight-color:transparent}
+  #cake:focus-visible{outline:3px solid var(--mint);outline-offset:6px;border-radius:12px}
+  .flame{transform-origin:50% 100%;transform-box:fill-box;animation:flicker .6s infinite alternate ease-in-out}
+  @keyframes flicker{from{transform:scale(1,1) rotate(-3deg)}to{transform:scale(.9,1.12) rotate(3deg)}}
+  .out .flame{display:none}
+  .smoke{opacity:0}
+  .out .smoke{animation:smoke 1.6s ease-out}
+  @keyframes smoke{0%{opacity:.7;transform:translateY(0)}100%{opacity:0;transform:translateY(-30px)}}
+  #pesan{max-width:30rem;margin-top:20px;opacity:0;transform:translateY(12px);transition:opacity .8s,transform .8s;pointer-events:none}
+  .out #pesan{opacity:1;transform:none;pointer-events:auto}
+  #pesan p{font-size:1.15rem;line-height:1.6;margin:0 0 12px}
+  #pesan .dari{font-family:'Caveat',cursive;font-size:1.8rem;color:var(--pink)}
+  button{font:inherit;background:var(--mint);color:#1d1230;border:0;border-radius:999px;padding:10px 22px;font-weight:600;cursor:pointer;margin-top:8px}
+  button:focus-visible{outline:3px solid var(--flame);outline-offset:3px}
+  #musik{position:fixed;top:14px;right:14px;width:44px;height:44px;padding:0;margin:0;font-size:1.3rem;background:rgba(255,246,238,.15);color:var(--text);display:none}
+  #musik.on{display:block}
+  canvas{position:fixed;inset:0;pointer-events:none;width:100%;height:100%}
+  @media (prefers-reduced-motion:reduce){.flame,.out .smoke{animation:none}#pesan{transition:none}}
+</style>
+</head>
+<body>
+<main>
+  <h1>Selamat Ulang Tahun,</h1>
+  <div class="nama" id="nama">Sahabatku</div>
+  <p class="hint" id="hint">Tiup lilinnya dulu, yuk. Ketuk kuenya!</p>
+
+  <svg id="cake" viewBox="0 0 320 300" role="button" tabindex="0" aria-label="Kue ulang tahun, ketuk untuk meniup lilin">
+    <!-- piring -->
+    <ellipse cx="160" cy="278" rx="140" ry="14" fill="#1d1230" opacity=".5"/>
+    <!-- kue bawah -->
+    <rect x="30" y="190" width="260" height="84" rx="14" fill="#ffe8d6"/>
+    <path d="M30 205c20 22 40-6 60 14s40-6 60 14 40-6 60 14 40-6 60 12 20-4 20-4v-30H30z" fill="#ff8fa3"/>
+    <!-- kue atas -->
+    <rect x="75" y="130" width="170" height="64" rx="12" fill="#ffd3b5"/>
+    <path d="M75 146c14 20 28-4 42 12s28-4 42 12 28-4 42 12 28-4 42 10v-26H75z" fill="#7ae7c7"/>
+    <!-- lilin -->
+    <g>
+      <rect x="120" y="86" width="12" height="46" rx="4" fill="#ff8fa3"/>
+      <rect x="154" y="80" width="12" height="52" rx="4" fill="#7ae7c7"/>
+      <rect x="188" y="86" width="12" height="46" rx="4" fill="#ffb627"/>
+      <g class="flame"><path d="M126 52c-9 12-8 24 0 30 8-6 9-18 0-30z" fill="#ffb627"/><path d="M126 66c-3 6-3 11 0 14 3-3 3-8 0-14z" fill="#fff6ee"/></g>
+      <g class="flame" style="animation-delay:.2s"><path d="M160 46c-9 12-8 24 0 30 8-6 9-18 0-30z" fill="#ffb627"/><path d="M160 60c-3 6-3 11 0 14 3-3 3-8 0-14z" fill="#fff6ee"/></g>
+      <g class="flame" style="animation-delay:.4s"><path d="M194 52c-9 12-8 24 0 30 8-6 9-18 0-30z" fill="#ffb627"/><path d="M194 66c-3 6-3 11 0 14 3-3 3-8 0-14z" fill="#fff6ee"/></g>
+      <g class="smoke" fill="none" stroke="#fff6ee" stroke-width="3" stroke-linecap="round">
+        <path d="M126 76c-6-8 6-14 0-24"/><path d="M160 70c-6-8 6-14 0-24"/><path d="M194 76c-6-8 6-14 0-24"/>
+      </g>
+    </g>
+  </svg>
+
+  <section id="pesan" aria-live="polite">
+    <p id="isi"></p>
+    <p class="dari" id="dari"></p>
+    <button id="lagi" type="button">Rayakan lagi 🎉</button>
+  </section>
+</main>
+<button id="musik" type="button" aria-label="Matikan musik">🔊</button>
+<canvas id="confetti" aria-hidden="true"></canvas>
+
+<script>
+  /* ====== UBAH BAGIAN INI ====== */
+  const NAMA   = "Sahabatku";   // nama temanmu (atau pakai ?nama=Budi di URL)
+  const PESAN  = "Semoga hari ini penuh tawa, rezeki lancar, dan semua doamu satu per satu terkabul. Makasih sudah jadi teman yang selalu ada. Panjang umur dan sehat selalu!";
+  const DARI   = "— dari temanmu";
+  const MUSIK  = "musik.mp3";   // nama file lagu (taruh sefolder dengan index.html)
+  const VOLUME = 0.6;           // 0 sampai 1
+  /* ============================= */
+
+  const lagu = new Audio(MUSIK);
+  lagu.loop = true; lagu.volume = VOLUME; lagu.preload = "auto";
+  const tombolMusik = document.getElementById("musik");
+  function putarMusik(){
+    lagu.play().then(() => {
+      tombolMusik.classList.add("on");
+      tombolMusik.textContent = "🔊";
+    }).catch(() => {});  // file tidak ada / diblokir: halaman tetap jalan
+  }
+  tombolMusik.addEventListener("click", () => {
+    if (lagu.paused){ lagu.play(); tombolMusik.textContent = "🔊"; tombolMusik.setAttribute("aria-label","Matikan musik"); }
+    else { lagu.pause(); tombolMusik.textContent = "🔇"; tombolMusik.setAttribute("aria-label","Nyalakan musik"); }
+  });
+
+  const q = new URLSearchParams(location.search);
+  const nama = q.get("nama") || NAMA;
+  document.getElementById("nama").textContent = nama;
+  document.title = "Selamat Ulang Tahun, " + nama + "!";
+  document.getElementById("isi").textContent = PESAN;
+  document.getElementById("dari").textContent = q.get("dari") || DARI;
+
+  const cake = document.getElementById("cake");
+  const hint = document.getElementById("hint");
+  const body = document.body;
+  const cv = document.getElementById("confetti");
+  const ctx = cv.getContext("2d");
+  let pieces = [], raf = null;
+  const colors = ["#ff8fa3","#ffb627","#7ae7c7","#ffe8d6","#b69cff"];
+
+  function resize(){ cv.width = innerWidth; cv.height = innerHeight; }
+  addEventListener("resize", resize); resize();
+
+  function burst(){
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return;
+    for (let i = 0; i < 160; i++){
+      pieces.push({
+        x: cv.width/2, y: cv.height*0.4,
+        vx: (Math.random()-.5)*14, vy: -Math.random()*14-4,
+        s: Math.random()*7+4, r: Math.random()*6, vr:(Math.random()-.5)*.4,
+        c: colors[(Math.random()*colors.length)|0]
+      });
+    }
+    if (!raf) raf = requestAnimationFrame(tick);
+  }
+  function tick(){
+    ctx.clearRect(0,0,cv.width,cv.height);
+    pieces.forEach(p=>{
+      p.vy += .35; p.x += p.vx; p.y += p.vy; p.r += p.vr; p.vx *= .99;
+      ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.r);
+      ctx.fillStyle = p.c; ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6); ctx.restore();
+    });
+    pieces = pieces.filter(p => p.y < cv.height + 20);
+    raf = pieces.length ? requestAnimationFrame(tick) : null;
+    if (!raf) ctx.clearRect(0,0,cv.width,cv.height);
+  }
+
+  function tiup(){
+    if (body.classList.contains("out")) return;
+    body.classList.add("out");
+    hint.textContent = "Make a wish! ✨";
+    putarMusik();
+    burst();
+  }
+  cake.addEventListener("click", tiup);
+  cake.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " "){ e.preventDefault(); tiup(); }});
+  document.getElementById("lagi").addEventListener("click", burst);
+</script>
+</body>
+</html>
